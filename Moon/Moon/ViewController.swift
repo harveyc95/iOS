@@ -35,6 +35,8 @@ class ViewController: UIViewController {
             print(error.description)
         }
         
+        print(rocket.frame.origin)
+        rocket.frame.origin.y = view.frame.height - 200
     }
 
 //    override func didReceiveMemoryWarning() {
@@ -54,11 +56,9 @@ class ViewController: UIViewController {
     }
     
     @objc func animate() {
-        UIView.animate(withDuration: 3, animations: {
-            self.rocket.frame = CGRect(x: 0, y: -20, width: 410, height: 280)
-        }) { (finished) in
-            self.moonLabel.isHidden = false
-        }
+        let animationFunc: () -> () = { self.rocket.frame.origin.y = -self.rocket.frame.height/2 }
+        let completeFunc: (Bool)->() = { _ in self.moonLabel.isHidden = false }
+        UIView.animate(withDuration: 3, animations: animationFunc, completion: completeFunc)
     }
     
 }
